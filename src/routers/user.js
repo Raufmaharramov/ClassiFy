@@ -13,7 +13,7 @@ router.post("/users", async (req, res) => {
     await user.save();
     welcomeEmail(user.email, user.name);
     const token = await user.generateAuthToken();
-    res.status(201).send({ user, token });
+    res.status(201).send({ token, username: user.name, avatar: user.avatar, id: user.id });
   } catch (e) {
     res.status(400).send(e);
   }
@@ -23,7 +23,7 @@ router.post("/users/login", async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password);
     const token = await user.generateAuthToken();
-    res.send({ user, token });
+    res.send({ token, username: user.name, avatar: user.avatar, id: user.id });
   } catch (e) {
     res.status(400).send();
   }
