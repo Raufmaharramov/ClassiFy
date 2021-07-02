@@ -1,13 +1,10 @@
-import React, { Fragment, useContext } from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { Fragment } from "react";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
-import Moment from "react-moment";
-import StateContext from "../StateContext";
 import TasksModel from "./TasksModel";
 
 const Dashboard = () => {
-  const appState = useContext(StateContext);
-
   return (
     <Fragment>
       <header id="main-header" className="py-2 bg-primary text-white">

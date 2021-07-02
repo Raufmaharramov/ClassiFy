@@ -1,82 +1,74 @@
-import React, { useContext, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { Fragment, useContext, useEffect } from "react";
 import Axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import Moment from "react-moment";
-import StateContext from "../StateContext";
 import DispatchContext from "../DispatchContext";
-import Dashboard from "./Dashboard";
+import StateContext from "../StateContext";
 
-const CategoryItem = props => {
-  const cat = useParams().cat;
+const CategoryItem = () => {
+  const cat = useParams().category;
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
 
-  // const { category, owner, title, createdAt, description } = props.task;
-
   useEffect(() => {
-    async function fetchCategory() {
+    const ourRequest = Axios.CancelToken.source();
+    async function fetchData() {
       const config = {
         headers: { Authorization: `Bearer ${appState.user.token}` }
       };
       try {
-        const response = await Axios.get(`/tasks/${cat}`, config);
+        const response = await Axios.get(`/categories/${cat}`, config, { cancelToken: ourRequest.token });
         appDispatch({ type: "tasks", data: response.data });
-      } catch (error) {}
+      } catch (error) {
+        console.log(error.message);
+      }
     }
-    fetchCategory();
+    fetchData();
+    return () => ourRequest.cancel();
   }, []);
 
+  async function handleDelete(myId) {
+    const config = {
+      headers: { Authorization: `Bearer ${appState.user.token}` }
+    };
+    try {
+      await Axios.delete(`/tasks/${myId}`, config);
+      appDispatch({ type: "deleteTask", data: myId });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return (
-    <section id="posts">
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <div className="card">
-              <div className="card-header">
-                <h4>Latest Posts</h4>
-              </div>
-              <table className="table table-striped">
-                <thead className="thead-dark">
-                  <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Date</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                {appState.tasks.length > 0 ? (
-                  appState.tasks.slice(0, 6).map((task, index) => {
-                    return (
-                      <tbody key={index}>
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>{task.title}</td>
-                          <td>
-                            <Moment format="MM/DD/YYYY">{task.createdAt}</Moment>
-                          </td>
-                          <td>
-                            <a href="details.html" className="btn btn-secondary">
-                              <i className="fas fa-angle-double-right"></i> Details
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    );
-                  })
-                ) : (
-                  <tbody>
-                    <tr>
-                      <td>No Tasks found...</td>
-                    </tr>
-                  </tbody>
-                )}
-              </table>
+    <Fragment>
+      {appState.tasks.length > 0 ? (
+        appState.tasks.map((task, index) => (
+          <div key={index} className="card text-white bg-info mb-3" style={{ maxWidth: "50rem" }}>
+            <div className="card-header">
+              Have you completed your task?{" "}
+              <span>
+                {" "}
+                <Link to={`/tasks/${task._id}/edit`} data-tip="Edit" data-for="edit" className="text-primary mr-2">
+                  <i className="fas fa-edit"></i>
+                </Link>
+              </span>
+              <span>
+                {" "}
+                <Link to="#!" onClick={() => handleDelete(task._id)} data-tip="Delete" data-for="delete" className="delete-post-button text-danger">
+                  <i className="fas fa-trash"></i>
+                </Link>
+              </span>
+            </div>
+            <div className="card-body">
+              <h5 className="card-title">{task.title}</h5>
+              <p className="card-text">{task.description}</p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        ))
+      ) : (
+        <h4>No Tasks Found...</h4>
+      )}
+    </Fragment>
   );
 };
 

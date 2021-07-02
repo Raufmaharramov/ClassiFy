@@ -27,42 +27,42 @@ const Login = () => {
 
   return (
     <Fragment>
-      <header id="main-header" class="py-2 bg-primary text-white">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6">
+      <header id="main-header" className="py-2 bg-primary text-white">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
               <h1>
-                <i class="fas fa-user"></i> Task Manager
+                <i className="fas fa-user"></i> Task Manager
               </h1>
             </div>
           </div>
         </div>
       </header>
 
-      <section id="actions" class="py-4 mb-4 bg-light">
-        <div class="container">
-          <div class="row"></div>
+      <section id="actions" className="py-4 mb-4 bg-light">
+        <div className="container">
+          <div className="row"></div>
         </div>
       </section>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 mx-auto">
-            <div class="card">
-              <div class="card-header">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 mx-auto">
+            <div className="card">
+              <div className="card-header">
                 <h4>Account Login</h4>
               </div>
-              <div class="card-body">
+              <div className="card-body">
                 <form onSubmit={handleSubmit} action="index.html">
-                  <div class="form-group">
+                  <div className="form-group">
                     <label htmlFor="email">Email</label>
-                    <input onChange={e => setEmail(e.target.value)} value={email} type="text" class="form-control" />
+                    <input onChange={e => setEmail(e.target.value)} value={email} type="text" className="form-control" />
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                     <label htmlFor="password">Password</label>
-                    <input onChange={e => setPassword(e.target.value)} value={password} type="password" class="form-control" />
+                    <input onChange={e => setPassword(e.target.value)} value={password} type="password" className="form-control" />
                   </div>
-                  <input type="submit" value="Login" class="btn btn-primary btn-block" />
+                  <input type="submit" value="Login" className="btn btn-primary btn-block" />
                 </form>
               </div>
             </div>

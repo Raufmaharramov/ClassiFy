@@ -24,7 +24,6 @@ const Task = props => {
     };
     try {
       const response = await Axios.post("/tasks", formData, config);
-      console.log(response.data);
       appDispatch({ type: "task", data: response.data });
       props.history.push("/dashboard");
     } catch (error) {
@@ -93,42 +92,6 @@ const Task = props => {
           </div>
         </div>
       </section>
-
-      {/* // <div className="modal fade" id="addPostModal">
-    //   <div className="modal-dialog modal-lg">
-    //     <div className="modal-content">
-    //       <div className="modal-header bg-primary text-white">
-    //         <h5 className="modal-title">Add Post</h5>
-    //         <button className="close" data-dismiss="modal">
-    //           <span>&times;</span>
-    //         </button>
-    //       </div>
-    //       <div className="modal-body">
-    //         <form onSubmit={handleSubmit}>
-    //           <div className="form-group">
-    //             <label htmlFor="title">Title</label>
-    //             <input name="title" onChange={e => onChange(e)} value={title} type="text" className="form-control" />
-    //           </div>
-    //           <div className="form-group">
-    //             <label htmlFor="category">Category</label>
-    //             <select name="category" onChange={e => onChange(e)} value={category} className="form-control">
-    //               <option value="">Education</option>
-    //               <option value="">Daily Life</option>
-    //               <option value="">Business</option>
-    //               <option value="">Bills & Payments</option>
-    //               <option value="">Health & Wellness</option>
-    //             </select>
-    //           </div>
-    //           <div className="form-group">
-    //             <label htmlFor="body">Description</label>
-    //             <textarea name="description" onChange={e => onChange(e)} value={description} className="form-control"></textarea>
-    //           </div>
-    //           <input type="submit" value="Submit" class="btn btn-primary btn-block" />
-    //         </form>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div> */}
     </Fragment>
   );
 };

@@ -16,6 +16,7 @@ import Task from "./components/Task";
 import Tasks from "./components/Tasks";
 import Categories from "./components/Categories";
 import CategoryItem from "./components/CategoryItem";
+import EditTask from "./components/EditTask";
 
 import "./App.css";
 
@@ -54,6 +55,9 @@ function App() {
       case "tasks":
         draft.tasks = action.data;
         return;
+      case "deleteTask":
+        draft.tasks = draft.tasks.filter(task => task._id !== action.data);
+        return;
     }
   }
 
@@ -89,6 +93,7 @@ function App() {
                 <Route exact path="/tasks" component={Tasks} />
                 <Route exact path="/categories" component={Categories} />
                 <Route exact path="/categories/:category" component={CategoryItem} />
+                <Route exact path="/tasks/:id/edit" component={EditTask} />
               </Switch>
             </section>
           </Fragment>

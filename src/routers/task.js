@@ -4,6 +4,32 @@ const Task = require("../models/task");
 
 const taskRouter = new express.Router();
 
+taskRouter.get("/tasks", auth, async (req, res) => {
+  try {
+    const tasks = await Task.find({ owner: req.user._id }).sort({ createdAt: -1 });
+    if (!tasks) {
+      res.status(401).send("No post found!");
+    }
+
+    res.send(tasks);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
+taskRouter.get("/categories/:category", auth, async (req, res) => {
+  const cat = req.params.category;
+  try {
+    const tasks = await Task.find({ category: cat, owner: req.user.id });
+    if (!tasks) {
+      res.status(404).send("Not Found");
+    }
+    res.status(202).send(tasks);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 taskRouter.post("/tasks", auth, async (req, res) => {
   // const task = new Task({
   //     ...req.body,
@@ -27,61 +53,10 @@ taskRouter.post("/tasks", auth, async (req, res) => {
   }
 });
 
-taskRouter.get("/tasks/:owner", auth, async (req, res) => {
-  //   const match = {};
-  //   const sort = {};
-
-  //   if (req.query.completed) {
-  //     match.completed = req.query.completed === "true";
-  //   }
-
-  //   if (req.query.sortBy) {
-  //     const parts = req.query.sortBy.split(":");
-  //     sort[parts[0]] = parts[1] === "desc" ? -1 : 1;
-  //   }
-  //   try {
-  //     await req.user
-  //       .populate({
-  //         path: "tasks",
-  //         match,
-  //         options: {
-  //           limit: parseInt(req.query.limit),
-  //           skip: parseInt(req.query.skip),
-  //           sort
-  //         }
-  //       })
-  //       .execPopulate();
-
-  try {
-    const tasks = await Task.find({ owner: req.user._id }).sort({ createdAt: -1 });
-    if (!tasks) {
-      res.status(401).send("No post found!");
-    }
-
-    res.send(tasks);
-  } catch (e) {
-    res.status(500).send(e);
-  }
-});
-
 taskRouter.get("/tasks/:id", auth, async (req, res) => {
+  const _id = req.params.id;
   try {
-    const _id = req.params.id;
-    const task = await Task.findOne({ _id, owner: req.user._id });
-
-    if (!task) {
-      res.status(404).send();
-    }
-    res.status(202).send(task);
-  } catch (e) {
-    res.status(500).send();
-  }
-});
-
-taskRouter.get("/tasks/:cat", auth, async (req, res) => {
-  try {
-    const cat = req.params.category;
-    const task = await Task.findOne({ cat, owner: req.user._id });
+    const task = await Task.findOne({ _id, owner: req.user.id });
 
     if (!task) {
       res.status(404).send();
@@ -94,7 +69,7 @@ taskRouter.get("/tasks/:cat", auth, async (req, res) => {
 
 taskRouter.patch("/tasks/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
-  const validUpdates = ["completed", "description"];
+  const validUpdates = ["completed", "description", "category", "title"];
   const isValid = updates.every(elem => validUpdates.includes(elem));
 
   if (!isValid) {

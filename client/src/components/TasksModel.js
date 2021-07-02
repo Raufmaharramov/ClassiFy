@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, useContext, useEffect } from "react";
 import Axios from "axios";
 import Moment from "react-moment";
@@ -9,19 +11,20 @@ const TasksModel = () => {
   const appDispatch = useContext(DispatchContext);
 
   useEffect(() => {
+    const ourRequest = Axios.CancelToken.source();
     async function fetchTasks() {
       const config = {
         headers: { Authorization: `Bearer ${appState.user.token}` }
       };
       try {
-        const response = await Axios.get(`/tasks/${appState.user.id}`, config);
-        console.log(response.data);
+        const response = await Axios.get("/tasks", config, { cancelToken: ourRequest.token });
         appDispatch({ type: "tasks", data: response.data });
       } catch (error) {
         console.log(error.message);
       }
     }
     fetchTasks();
+    return () => ourRequest.cancel();
   }, []);
 
   return (

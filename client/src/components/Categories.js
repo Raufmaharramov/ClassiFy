@@ -1,23 +1,42 @@
-import React, { Fragment, useContext, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { Fragment, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Axios from "axios";
 import Footer from "./Footer";
-import Moment from "react-moment";
 import StateContext from "../StateContext";
-import CategoryItem from "./CategoryItem";
+import DispatchContext from "../DispatchContext";
 
 const Categories = () => {
   const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
+  const education = "Education";
+  const business = "Business";
+  const dayl = "Daily Life";
+  const bill = "Bills & Payments";
+  const health = "Health & Wellness";
+
+  useEffect(() => {
+    const ourRequest = Axios.CancelToken.source();
+    async function fetchTasks() {
+      const config = {
+        headers: { Authorization: `Bearer ${appState.user.token}` }
+      };
+      try {
+        const response = await Axios.get("/tasks", config, { cancelToken: ourRequest.token });
+        appDispatch({ type: "tasks", data: response.data });
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    fetchTasks();
+    return () => ourRequest.cancel();
+  }, []);
+
   const cat1 = appState.tasks.filter(task => task.category === "Education");
   const cat2 = appState.tasks.filter(task => task.category === "Daily Life");
   const cat3 = appState.tasks.filter(task => task.category === "Business");
   const cat4 = appState.tasks.filter(task => task.category === "Bills & Payments");
   const cat5 = appState.tasks.filter(task => task.category === "Health & Wellness");
-
-  // const [edu, setEdu] = useState(cat1)
-  // const [dayl, setDayl] = useState(cat2)
-  // const [buss, setBuss] = useState(cat3)
-  // const [bills, setBills] = useState(cat4)
-  // const [heal, setHeal] = useState(cat5)
 
   return (
     <Fragment>
@@ -46,29 +65,62 @@ const Categories = () => {
                     <tr>
                       <th>#</th>
                       <th>Title</th>
-                      <th>Date</th>
                       <th>#Tasks</th>
                       <th></th>
                     </tr>
                   </thead>
-                  {appState.tasks.map((task, index) => (
-                    <Fragment>
-                      <tbody key={index}>
-                        <tr>
-                          <td>1</td>
-                          <td>{task.category}</td>
-                          <td>
-                            <Moment format="MM/DD/YYYY">{task.createdAt}</Moment>
-                          </td>
-                          <td>
-                            <Link to={`/categories/${task.category}`} className="btn btn-secondary">
-                              <i className="fas fa-angle-double-right"></i> Details
-                            </Link>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </Fragment>
-                  ))}
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>{education}</td>
+                      <td>{cat1.length}</td>
+                      <td>
+                        <Link to={`/categories/${education}`} className="btn btn-secondary">
+                          <i className="fas fa-angle-double-right"></i> Details
+                        </Link>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Daily Life</td>
+                      <td>{cat2.length}</td>
+                      <td>
+                        <Link to={`/categories/${dayl}`} className="btn btn-secondary">
+                          <i className="fas fa-angle-double-right"></i> Details
+                        </Link>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Business</td>
+                      <td>{cat3.length}</td>
+                      <td>
+                        <Link to={`/categories/${business}`} className="btn btn-secondary">
+                          <i className="fas fa-angle-double-right"></i> Details
+                        </Link>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>Bills & Payments</td>
+                      <td>{cat4.length}</td>
+                      <td>
+                        <Link to={`/categories/${bill}`} className="btn btn-secondary">
+                          <i className="fas fa-angle-double-right"></i> Details
+                        </Link>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>Health & Wellness</td>
+                      <td>{cat5.length}</td>
+                      <td>
+                        <Link to={`/categories/${health}`} className="btn btn-secondary">
+                          <i className="fas fa-angle-double-right"></i> Details
+                        </Link>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

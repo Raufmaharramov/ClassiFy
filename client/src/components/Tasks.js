@@ -1,15 +1,8 @@
-import React, { Fragment, useContext, useEffect } from "react";
-import Axios from "axios";
-import Moment from "react-moment";
-import StateContext from "../StateContext";
-import DispatchContext from "../DispatchContext";
+import React, { Fragment } from "react";
 import Footer from "./Footer";
 import TasksModel from "./TasksModel";
 
 const Tasks = () => {
-  const appState = useContext(StateContext);
-  const appDispatch = useContext(DispatchContext);
-
   return (
     <Fragment>
       <header id="main-header" className="py-2 bg-primary text-white">
