@@ -20,7 +20,7 @@ const Navbar = props => {
         <div className="container">
           {!appState.loggedIn ? (
             <Fragment>
-              <Link to="/register" className="navbar-brand">
+              <Link to="/" className="navbar-brand">
                 Blogen
               </Link>
               <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -46,7 +46,7 @@ const Navbar = props => {
                   </Link>
                 </li>
                 <li className="nav-item px-2">
-                  <a href="users.html" className="nav-link">
+                  <a href="#!" className="nav-link">
                     Users
                   </a>
                 </li>
@@ -58,10 +58,10 @@ const Navbar = props => {
                     <i className="fas fa-user"></i> Welcome {appState.user.username}
                   </a>
                   <div className="dropdown-menu">
-                    <a href="profile.html" className="dropdown-item">
+                    <a href="#!" className="dropdown-item">
                       <i className="fas fa-user-circle"></i> Profile
                     </a>
-                    <a href="settings.html" className="dropdown-item">
+                    <a href="#!" className="dropdown-item">
                       <i className="fas fa-cog"></i> Settings
                     </a>
                   </div>

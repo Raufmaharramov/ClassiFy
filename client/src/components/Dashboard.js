@@ -1,23 +1,25 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import TasksModel from "./TasksModel";
+import StateContext from "../StateContext";
 
 const Dashboard = () => {
+  const appState = useContext(StateContext);
   return (
     <Fragment>
-      <header id="main-header" className="py-2 bg-primary text-white">
+      <section id="main-header" className="py-2 bg-primary text-white">
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-8">
               <h1>
                 <i className="fas fa-cog"></i> Dashboard
               </h1>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
       <section id="actions" className="py-4 mb-4 bg-light">
         <div className="container">
@@ -28,9 +30,9 @@ const Dashboard = () => {
               </Link>
             </div>
             <div className="col-md-3">
-              <a href="#" className="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal">
-                <i className="fas fa-plus"></i> Add Category
-              </a>
+              <Link to="/completed" className="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal">
+                <i class="fas fa-user-check"></i> Completed Tasks
+              </Link>
             </div>
             <div className="col-md-3">
               <a href="#" className="btn btn-warning btn-block" data-toggle="modal" data-target="#addUserModal">
@@ -50,7 +52,7 @@ const Dashboard = () => {
                 <div className="card-body">
                   <h3>Tasks</h3>
                   <h4 className="display-4">
-                    <i className="fas fa-pencil-alt"></i> 6
+                    <i className="fas fa-pencil-alt"></i> {appState.tasks.length}
                   </h4>
                   <Link to="/tasks" className="btn btn-outline-light btn-sm">
                     View
@@ -62,7 +64,7 @@ const Dashboard = () => {
                 <div className="card-body">
                   <h3>Categories</h3>
                   <h4 className="display-4">
-                    <i className="fas fa-folder"></i> 4
+                    <i className="fas fa-folder"></i> 5
                   </h4>
                   <Link to="/categories" className="btn btn-outline-light btn-sm">
                     View

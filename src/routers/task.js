@@ -6,7 +6,7 @@ const taskRouter = new express.Router();
 
 taskRouter.get("/tasks", auth, async (req, res) => {
   try {
-    const tasks = await Task.find({ owner: req.user._id }).sort({ createdAt: -1 });
+    const tasks = await Task.find({ completed: false, owner: req.user._id }).sort({ createdAt: -1 });
     if (!tasks) {
       res.status(401).send("No post found!");
     }
@@ -50,6 +50,18 @@ taskRouter.post("/tasks", auth, async (req, res) => {
     res.send(task);
   } catch (e) {
     res.status(400).send(e);
+  }
+});
+
+taskRouter.get("/completed", auth, async (req, res) => {
+  try {
+    const tasks = await Task.find({ completed: true, owner: req.user.id });
+    if (!tasks) {
+      res.status(404).send("Not Found");
+    }
+    res.status(202).send(tasks);
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 });
 

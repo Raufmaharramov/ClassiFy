@@ -17,6 +17,7 @@ import Tasks from "./components/Tasks";
 import Categories from "./components/Categories";
 import CategoryItem from "./components/CategoryItem";
 import EditTask from "./components/EditTask";
+import CompletedTasks from "./components/CompletedTasks";
 
 import "./App.css";
 
@@ -31,7 +32,8 @@ function App() {
       id: localStorage.getItem("DevAppId")
     },
     task: null,
-    tasks: []
+    tasks: [],
+    completed: []
   };
 
   function ourReducer(draft, action) {
@@ -57,6 +59,9 @@ function App() {
         return;
       case "deleteTask":
         draft.tasks = draft.tasks.filter(task => task._id !== action.data);
+        return;
+      case "completed":
+        draft.completed = action.data;
         return;
     }
   }
@@ -94,6 +99,7 @@ function App() {
                 <Route exact path="/categories" component={Categories} />
                 <Route exact path="/categories/:category" component={CategoryItem} />
                 <Route exact path="/tasks/:id/edit" component={EditTask} />
+                <Route exact path="/completed" component={CompletedTasks} />
               </Switch>
             </section>
           </Fragment>

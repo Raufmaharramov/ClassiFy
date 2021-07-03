@@ -3,28 +3,26 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import Axios from "axios";
 import Moment from "react-moment";
-import StateContext from "../StateContext";
 import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
 
-const TasksModel = () => {
+const CompletedTasks = () => {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
 
   useEffect(() => {
-    const ourRequest = Axios.CancelToken.source();
-    async function fetchTasks() {
+    async function getCompletedTasks() {
       const config = {
         headers: { Authorization: `Bearer ${appState.user.token}` }
       };
       try {
-        const response = await Axios.get("/tasks", config, { cancelToken: ourRequest.token });
-        appDispatch({ type: "tasks", data: response.data });
+        const response = await Axios.get("/completed", config);
+        appDispatch({ type: "completed", data: response.data });
       } catch (error) {
         console.log(error.message);
       }
     }
-    fetchTasks();
-    return () => ourRequest.cancel();
+    getCompletedTasks();
   }, []);
 
   return (
@@ -43,12 +41,12 @@ const TasksModel = () => {
                       <th>#</th>
                       <th>Title</th>
                       <th>Category</th>
-                      <th>Date</th>
+                      <th>Completed Date</th>
                       <th></th>
                     </tr>
                   </thead>
-                  {appState.tasks.length > 0 ? (
-                    appState.tasks.slice(0, 6).map((task, index) => {
+                  {appState.completed.length > 0 ? (
+                    appState.completed.slice(0, 6).map((task, index) => {
                       return (
                         <tbody key={index}>
                           <tr>
@@ -56,7 +54,7 @@ const TasksModel = () => {
                             <td>{task.title}</td>
                             <td>{task.category}</td>
                             <td>
-                              <Moment format="MM/DD/YYYY">{task.createdAt}</Moment>
+                              <Moment format="MM/DD/YYYY">{task.updatedAt}</Moment>
                             </td>
                             <td>
                               <a href="details.html" className="btn btn-secondary">
@@ -113,4 +111,4 @@ const TasksModel = () => {
   );
 };
 
-export default TasksModel;
+export default CompletedTasks;
