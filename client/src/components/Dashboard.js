@@ -31,7 +31,7 @@ const Dashboard = () => {
             </div>
             <div className="col-md-3">
               <Link to="/completed" className="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal">
-                <i class="fas fa-user-check"></i> Completed Tasks
+                <i className="fas fa-user-check"></i> Completed Tasks
               </Link>
             </div>
             <div className="col-md-3">
@@ -44,9 +44,9 @@ const Dashboard = () => {
       </section>
 
       <section id="posts">
+        <TasksModel />
         <div className="container">
-          <div className="row">
-            <TasksModel />
+          <div className="col">
             <div className="col-md-3">
               <div className="card text-center bg-primary text-white mb-3">
                 <div className="card-body">
@@ -64,7 +64,7 @@ const Dashboard = () => {
                 <div className="card-body">
                   <h3>Categories</h3>
                   <h4 className="display-4">
-                    <i className="fas fa-folder"></i> 5
+                    <i className="fas fa-folder"></i> 4
                   </h4>
                   <Link to="/categories" className="btn btn-outline-light btn-sm">
                     View
@@ -87,6 +87,7 @@ const Dashboard = () => {
           </div>
         </div>
       </section>
+
       <Footer />
     </Fragment>
   );

@@ -20,7 +20,7 @@ taskRouter.get("/tasks", auth, async (req, res) => {
 taskRouter.get("/categories/:category", auth, async (req, res) => {
   const cat = req.params.category;
   try {
-    const tasks = await Task.find({ category: cat, owner: req.user.id });
+    const tasks = await Task.find({ category: cat, owner: req.user.id, completed: false }).sort({ createdAt: -1 });
     if (!tasks) {
       res.status(404).send("Not Found");
     }
@@ -55,7 +55,7 @@ taskRouter.post("/tasks", auth, async (req, res) => {
 
 taskRouter.get("/completed", auth, async (req, res) => {
   try {
-    const tasks = await Task.find({ completed: true, owner: req.user.id });
+    const tasks = await Task.find({ completed: true, owner: req.user.id }).sort({ updatedAt: -1 });
     if (!tasks) {
       res.status(404).send("Not Found");
     }

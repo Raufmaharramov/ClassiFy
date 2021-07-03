@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
+const gravatar = require("gravatar");
 const multer = require("multer");
 const sharp = require("sharp");
 const { welcomeEmail, goodbyeEmail } = require("../emails/account");
@@ -10,6 +11,12 @@ router.post("/users", async (req, res) => {
   const user = new User(req.body);
 
   try {
+    user.avatar = gravatar.url(user.email, {
+      s: "200",
+      r: "pg",
+      d: "mm"
+    });
+
     await user.save();
     welcomeEmail(user.email, user.name);
     const token = await user.generateAuthToken();

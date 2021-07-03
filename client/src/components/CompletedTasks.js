@@ -2,11 +2,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, useContext, useEffect } from "react";
 import Axios from "axios";
+import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 import Moment from "react-moment";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
 
-const CompletedTasks = () => {
+const CompletedTasks = props => {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
 
@@ -24,6 +26,30 @@ const CompletedTasks = () => {
     }
     getCompletedTasks();
   }, []);
+
+  async function complete(myId) {
+    const config = {
+      headers: { Authorization: `Bearer ${appState.user.token}` }
+    };
+    try {
+      await Axios.patch(`/tasks/${myId}`, { completed: false }, config);
+      appDispatch({ type: "deleteCompleted", data: myId });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async function handleDelete(myId) {
+    const config = {
+      headers: { Authorization: `Bearer ${appState.user.token}` }
+    };
+    try {
+      await Axios.delete(`/tasks/${myId}`, config);
+      appDispatch({ type: "deleteCompleted", data: myId });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   return (
     <Fragment>
@@ -43,6 +69,7 @@ const CompletedTasks = () => {
                       <th>Category</th>
                       <th>Completed Date</th>
                       <th></th>
+                      <th></th>
                     </tr>
                   </thead>
                   {appState.completed.length > 0 ? (
@@ -57,9 +84,14 @@ const CompletedTasks = () => {
                               <Moment format="MM/DD/YYYY">{task.updatedAt}</Moment>
                             </td>
                             <td>
-                              <a href="details.html" className="btn btn-secondary">
-                                <i className="fas fa-angle-double-right"></i> Details
-                              </a>
+                              <Link onClick={() => complete(task._id)} to="/completed">
+                                <i className="far fa-check-square"></i>
+                              </Link>
+                            </td>
+                            <td>
+                              <Link to="#!" onClick={() => handleDelete(task._id)} data-tip="Delete" data-for="delete" className="delete-post-button text-danger">
+                                <i className="fas fa-trash"></i>
+                              </Link>
                             </td>
                           </tr>
                         </tbody>
@@ -111,4 +143,4 @@ const CompletedTasks = () => {
   );
 };
 
-export default CompletedTasks;
+export default withRouter(CompletedTasks);

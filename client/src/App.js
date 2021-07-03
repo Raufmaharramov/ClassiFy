@@ -18,8 +18,10 @@ import Categories from "./components/Categories";
 import CategoryItem from "./components/CategoryItem";
 import EditTask from "./components/EditTask";
 import CompletedTasks from "./components/CompletedTasks";
+import Profile from "./components/Profile";
 
 import "./App.css";
+import Blogen from "./components/Blogen";
 
 function App() {
   const initialState = {
@@ -33,7 +35,8 @@ function App() {
     },
     task: null,
     tasks: [],
-    completed: []
+    completed: [],
+    categories: []
   };
 
   function ourReducer(draft, action) {
@@ -63,6 +66,15 @@ function App() {
       case "completed":
         draft.completed = action.data;
         return;
+      case "deleteCompleted":
+        draft.completed = draft.completed.filter(task => task._id !== action.data);
+        return;
+      case "complete":
+        draft.task.completed = true;
+        return;
+      case "addCategory":
+        draft.categories = draft.categories.concat(action.data);
+        return;
     }
   }
 
@@ -89,10 +101,12 @@ function App() {
           <Fragment>
             <FlashMessages />
             <Navbar />
-            <Route exact path="/" component={Register} />
+            <Route exact path="/" component={Blogen} />
+
             <section className="container">
               <Switch>
                 <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/add-task" component={Task} />
                 <Route exact path="/tasks" component={Tasks} />
@@ -100,6 +114,7 @@ function App() {
                 <Route exact path="/categories/:category" component={CategoryItem} />
                 <Route exact path="/tasks/:id/edit" component={EditTask} />
                 <Route exact path="/completed" component={CompletedTasks} />
+                <Route exact path="/profile" component={Profile} />
               </Switch>
             </section>
           </Fragment>
