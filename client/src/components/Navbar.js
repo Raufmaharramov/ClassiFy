@@ -12,12 +12,12 @@ const Navbar = props => {
 
   const logout = () => {
     appDispatch({ type: "logout" });
-    props.history.push("/login");
+    props.history.push("/");
   };
 
   return (
     <Fragment>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-0">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-2">
         <div className="container">
           {!appState.loggedIn ? (
             <Fragment>
@@ -25,18 +25,18 @@ const Navbar = props => {
                 <span className="navbar-toggler-icon"></span>
               </button>
               <Link to="/" className="navbar-brand">
-                Blogen
+                BucketTask
               </Link>
               <div className="collapse navbar-collapse" id="navbarCollapse">
                 <ul className="navbar-nav ml-auto">
                   <li className="nav-item ">
                     <Link to="/login" className="nav-link">
-                      <i className="fas fa-user-times"></i> Sign In
+                      <i className="fas fa-user"></i> Sign In
                     </Link>
                   </li>
                   <li className="nav-item ">
                     <Link to="/register" className="nav-link">
-                      <i className="fas fa-user-times"></i> Sign Up
+                      <i className="fas fa-user"></i> Sign Up
                     </Link>
                   </li>
                 </ul>
@@ -48,7 +48,7 @@ const Navbar = props => {
                 <span className="navbar-toggler-icon"></span>
               </button>
               <Link to="/dashboard" className="navbar-brand">
-                Blogen
+                BucketTask
               </Link>
               <div className="collapse navbar-collapse" id="navbarCollapse">
                 <ul className="navbar-nav ml-auto">
@@ -68,9 +68,9 @@ const Navbar = props => {
                     </Link>
                   </li>
                   <li className="nav-item px-2">
-                    <a href="#!" className="nav-link">
-                      Users
-                    </a>
+                    <Link to="/completed" className="nav-link">
+                      Completed
+                    </Link>
                   </li>
                   <li className="nav-item dropdown mr-3">
                     <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown">
@@ -86,7 +86,7 @@ const Navbar = props => {
                     </div>
                   </li>
                   <li className="nav-item">
-                    <Link onClick={logout} to="/login" className="nav-link">
+                    <Link onClick={logout} to="/" className="nav-link">
                       <i className="fas fa-user-times"></i> Logout
                     </Link>
                   </li>

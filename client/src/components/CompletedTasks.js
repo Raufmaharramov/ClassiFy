@@ -85,12 +85,12 @@ const CompletedTasks = props => {
                             </td>
                             <td>
                               <Link onClick={() => complete(task._id)} to="/completed">
-                                <i className="far fa-check-square"></i>
+                                <i className="far fa-check-square" style={{ fontSize: "1.5em" }}></i>
                               </Link>
                             </td>
                             <td>
                               <Link to="#!" onClick={() => handleDelete(task._id)} data-tip="Delete" data-for="delete" className="delete-post-button text-danger">
-                                <i className="fas fa-trash"></i>
+                                <i className="fas fa-trash" style={{ fontSize: "1.5em" }}></i>
                               </Link>
                             </td>
                           </tr>

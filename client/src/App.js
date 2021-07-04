@@ -36,7 +36,8 @@ function App() {
     task: null,
     tasks: [],
     completed: [],
-    categories: []
+    categories: [],
+    categoryTask: {}
   };
 
   function ourReducer(draft, action) {
@@ -73,7 +74,15 @@ function App() {
         draft.task.completed = true;
         return;
       case "addCategory":
-        draft.categories = draft.categories.concat(action.data);
+        if (!draft.categories.includes(action.data)) {
+          draft.categories = draft.categories.concat(action.data);
+        }
+        return;
+      case "getCategories":
+        draft.categories = action.data;
+        return;
+      case "showCounts":
+        draft.categoryTask = action.data;
         return;
     }
   }
@@ -102,7 +111,6 @@ function App() {
             <FlashMessages />
             <Navbar />
             <Route exact path="/" component={Blogen} />
-
             <section className="container">
               <Switch>
                 <Route exact path="/dashboard" component={Dashboard} />

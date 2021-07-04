@@ -34,6 +34,14 @@
   border-radius: 16px;
 }
 
+.logo {
+  width: 35rem;
+  float: right;
+  margin-top: -2rem;
+  margin-right: -14rem;
+  color: orange;
+}
+
 .header-wraper {
   position: relative;
   background: url(./img/background.jpg) no-repeat;
@@ -58,6 +66,16 @@
 
 .men {
   width: 100%;
+}
+
+.icon {
+  float: right;
+}
+
+.design {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: bolder;
+  font-style: oblique;
 }
 
 @keyframes App-logo-spin {

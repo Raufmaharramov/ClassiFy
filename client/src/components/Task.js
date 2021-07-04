@@ -1,4 +1,5 @@
-import React, { Fragment, useContext, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { Fragment, useContext, useState, useEffect } from "react";
 import Axios from "axios";
 import { withRouter } from "react-router";
 import StateContext from "../StateContext";
@@ -13,6 +14,21 @@ const Task = props => {
     category: ""
   });
 
+  useEffect(() => {
+    async function fetchData() {
+      const config = {
+        headers: { Authorization: `Bearer ${appState.user.token}` }
+      };
+      try {
+        const response = await Axios.get("/categories", config);
+        appDispatch({ type: "getCategories", data: response.data });
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+    fetchData();
+  }, []);
+
   const { title, description, category } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,6 +41,7 @@ const Task = props => {
     try {
       const response = await Axios.post("/tasks", formData, config);
       appDispatch({ type: "task", data: response.data });
+      appDispatch({ type: "addCategory", data: category });
       props.history.push("/dashboard");
     } catch (error) {
       console.log(error);
@@ -70,14 +87,18 @@ const Task = props => {
                       <input name="title" onChange={e => onChange(e)} value={title} type="text" className="form-control" />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="category">Category</label>
+                      <label htmlFor="category">Add Category</label>
+                      <input name="category" onChange={e => onChange(e)} value={category} type="text" className="form-control" />
+                      <span>OR</span>
+                      <br></br>
+                      <label htmlFor="category">Select Category</label>
                       <select name="category" onChange={e => onChange(e)} value={category} className="form-control">
                         <option value="0">Select Matching Category</option>
-                        <option value="Education">Education</option>
-                        <option value="Daily Life">Daily Life</option>
-                        <option value="Business">Business</option>
-                        <option value="Bills & Payments">Bills & Payments</option>
-                        <option value="Health & Wellness">Health & Wellness</option>
+                        {appState.categories.map((cat, index) => (
+                          <Fragment key={index}>
+                            <option value={cat}>{cat}</option>
+                          </Fragment>
+                        ))}
                       </select>
                     </div>
                     <div className="form-group">

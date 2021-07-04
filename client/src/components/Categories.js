@@ -9,11 +9,6 @@ import DispatchContext from "../DispatchContext";
 const Categories = () => {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
-  const education = "Education";
-  const business = "Business";
-  const dayl = "Daily Life";
-  const bill = "Bills & Payments";
-  const health = "Health & Wellness";
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source();
@@ -22,8 +17,8 @@ const Categories = () => {
         headers: { Authorization: `Bearer ${appState.user.token}` }
       };
       try {
-        const response = await Axios.get("/tasks", config, { cancelToken: ourRequest.token });
-        appDispatch({ type: "tasks", data: response.data });
+        const response = await Axios.get("/categories/count", config, { cancelToken: ourRequest.token });
+        appDispatch({ type: "showCounts", data: response.data });
       } catch (error) {
         console.log(error.message);
       }
@@ -31,12 +26,6 @@ const Categories = () => {
     fetchTasks();
     return () => ourRequest.cancel();
   }, []);
-
-  const cat1 = appState.tasks.filter(task => task.category === "Education");
-  const cat2 = appState.tasks.filter(task => task.category === "Daily Life");
-  const cat3 = appState.tasks.filter(task => task.category === "Business");
-  const cat4 = appState.tasks.filter(task => task.category === "Bills & Payments");
-  const cat5 = appState.tasks.filter(task => task.category === "Health & Wellness");
 
   return (
     <Fragment>
@@ -64,62 +53,24 @@ const Categories = () => {
                   <thead className="thead-dark">
                     <tr>
                       <th>#</th>
-                      <th>Title</th>
+                      <th>Category</th>
                       <th>#Tasks</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>{education}</td>
-                      <td>{cat1.length}</td>
-                      <td>
-                        <Link to={`/categories/${education}`} className="btn btn-secondary">
-                          <i className="fas fa-angle-double-right"></i> Details
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Daily Life</td>
-                      <td>{cat2.length}</td>
-                      <td>
-                        <Link to={`/categories/${dayl}`} className="btn btn-secondary">
-                          <i className="fas fa-angle-double-right"></i> Details
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Business</td>
-                      <td>{cat3.length}</td>
-                      <td>
-                        <Link to={`/categories/${business}`} className="btn btn-secondary">
-                          <i className="fas fa-angle-double-right"></i> Details
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Bills & Payments</td>
-                      <td>{cat4.length}</td>
-                      <td>
-                        <Link to={`/categories/${bill}`} className="btn btn-secondary">
-                          <i className="fas fa-angle-double-right"></i> Details
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Health & Wellness</td>
-                      <td>{cat5.length}</td>
-                      <td>
-                        <Link to={`/categories/${health}`} className="btn btn-secondary">
-                          <i className="fas fa-angle-double-right"></i> Details
-                        </Link>
-                      </td>
-                    </tr>
+                    {Object.keys(appState.categoryTask).map((key, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{key}</td>
+                        <td>{appState.categoryTask[key]}</td>
+                        <td>
+                          <Link to={`/categories/${key}`} className="btn btn-secondary">
+                            <i className="fas fa-angle-double-right"></i> Details
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

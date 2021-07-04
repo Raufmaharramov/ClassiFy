@@ -79,7 +79,7 @@ const TasksModel = props => {
                             </td>
                             <td>
                               <Link onClick={() => complete(task._id)} to="#!">
-                                <i className="far fa-square"></i>
+                                <i className="far fa-square" style={{ fontSize: "1.5em" }}></i>
                               </Link>
                             </td>
                             <td>

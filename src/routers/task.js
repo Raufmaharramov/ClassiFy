@@ -17,6 +17,39 @@ taskRouter.get("/tasks", auth, async (req, res) => {
   }
 });
 
+taskRouter.get("/categories/count", auth, async (req, res) => {
+  try {
+    const tasks = await Task.find({ owner: req.user._id });
+
+    const obj = {};
+    tasks.map(task => {
+      if (!obj[task.category]) {
+        obj[task.category] = 0;
+      }
+      obj[task.category]++;
+    });
+
+    res.status(200).send(obj);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+taskRouter.get("/categories", auth, async (req, res) => {
+  try {
+    const tasks = await Task.find({ owner: req.user._id });
+    const categories = [];
+    tasks.map(task => {
+      if (!categories.includes(task.category)) {
+        categories.unshift(task.category);
+      }
+    });
+    res.status(200).send(categories);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 taskRouter.get("/categories/:category", auth, async (req, res) => {
   const cat = req.params.category;
   try {
@@ -99,6 +132,18 @@ taskRouter.patch("/tasks/:id", auth, async (req, res) => {
     res.send(task);
   } catch (e) {
     res.status(500).send();
+  }
+});
+
+taskRouter.get("/search/:title", auth, async (req, res) => {
+  try {
+    const task = await Task.findOne({ title: req.params.title, owner: req.user._id });
+    if (!task) {
+      res.status(404).send("No task found for this title!");
+    }
+    res.status(200).send(task);
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 });
 

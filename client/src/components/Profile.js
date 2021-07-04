@@ -81,7 +81,7 @@ const Profile = props => {
               </a>
             </div>
             <div className="col-md-3">
-              <Link onClick={e => deleteProfile(e)} to="#!" className="btn btn-danger btn-block">
+              <Link onClick={e => deleteProfile(e)} to="/" className="btn btn-danger btn-block">
                 <i className="fas fa-trash"></i> Delete Account
               </Link>
             </div>

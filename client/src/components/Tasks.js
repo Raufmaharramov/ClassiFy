@@ -10,7 +10,7 @@ const Tasks = () => {
           <div className="row">
             <div className="col-md-6">
               <h1>
-                <i className="fas fa-pencil-alt"></i> Posts
+                <i className="fas fa-pencil-alt"></i> Tasks
               </h1>
             </div>
           </div>
