@@ -7,6 +7,7 @@ import { withRouter } from "react-router";
 import Moment from "react-moment";
 import StateContext from "../StateContext";
 import DispatchContext from "../DispatchContext";
+import Footer from "./Footer";
 
 const TasksModel = props => {
   const appState = useContext(StateContext);
@@ -36,8 +37,6 @@ const TasksModel = props => {
     try {
       await Axios.patch(`/tasks/${myId}`, { completed: true }, config);
       appDispatch({ type: "deleteTask", data: myId });
-
-      // props.history.push("/completed");
     } catch (error) {
       console.log(error.message);
     }
@@ -45,9 +44,9 @@ const TasksModel = props => {
 
   return (
     <Fragment>
-      <section id="posts" className="py-2 bg-light text-black">
-        <div className="container-fluid">
-          <div className="row">
+      <section id="posts" className="py-2  bg-light text-black">
+        <div className="container">
+          <div className="row unique">
             <div className="col">
               <div className="card">
                 <div className="card-header">
@@ -79,7 +78,7 @@ const TasksModel = props => {
                             </td>
                             <td>
                               <Link onClick={() => complete(task._id)} to="#!">
-                                <i className="far fa-square" style={{ fontSize: "1.5em" }}></i>
+                                <i className="far fa-square square" style={{ fontSize: "1.5em" }}></i>
                               </Link>
                             </td>
                             <td>
@@ -133,6 +132,7 @@ const TasksModel = props => {
           </div>
         </div>
       </section>
+      <Footer />
     </Fragment>
   );
 };

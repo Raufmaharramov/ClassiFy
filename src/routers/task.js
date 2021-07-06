@@ -139,11 +139,11 @@ taskRouter.get("/search/:title", auth, async (req, res) => {
   try {
     const task = await Task.findOne({ title: req.params.title, owner: req.user._id });
     if (!task) {
-      res.status(404).send("No task found for this title!");
+      res.status(404).send();
     }
     res.status(200).send(task);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send();
   }
 });
 

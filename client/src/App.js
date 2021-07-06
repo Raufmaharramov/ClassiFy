@@ -19,9 +19,9 @@ import CategoryItem from "./components/CategoryItem";
 import EditTask from "./components/EditTask";
 import CompletedTasks from "./components/CompletedTasks";
 import Profile from "./components/Profile";
-
+import PrivateRoute from "./components/PrivateRoute";
+import BucketTask from "./components/BucketTask";
 import "./App.css";
-import Blogen from "./components/Blogen";
 
 function App() {
   const initialState = {
@@ -110,19 +110,19 @@ function App() {
           <Fragment>
             <FlashMessages />
             <Navbar />
-            <Route exact path="/" component={Blogen} />
+            <Route exact path="/" component={BucketTask} />
             <section className="container">
               <Switch>
-                <Route exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <Route exact path="/add-task" component={Task} />
-                <Route exact path="/tasks" component={Tasks} />
-                <Route exact path="/categories" component={Categories} />
-                <Route exact path="/categories/:category" component={CategoryItem} />
-                <Route exact path="/tasks/:id/edit" component={EditTask} />
-                <Route exact path="/completed" component={CompletedTasks} />
-                <Route exact path="/profile" component={Profile} />
+                <PrivateRoute exact path="/add-task" component={Task} />
+                <PrivateRoute exact path="/tasks" component={Tasks} />
+                <PrivateRoute exact path="/categories" component={Categories} />
+                <PrivateRoute exact path="/categories/:category" component={CategoryItem} />
+                <PrivateRoute exact path="/tasks/:id/edit" component={EditTask} />
+                <PrivateRoute exact path="/completed" component={CompletedTasks} />
+                <PrivateRoute exact path="/profile" component={Profile} />
               </Switch>
             </section>
           </Fragment>

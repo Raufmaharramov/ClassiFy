@@ -38,8 +38,6 @@ const Profile = props => {
     fetchProfile();
   }, []);
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-
   async function deleteProfile() {
     const config = {
       headers: { Authorization: `Bearer ${appState.user.token}` }
@@ -48,6 +46,19 @@ const Profile = props => {
       await Axios.delete("/users/me", config);
       appDispatch({ type: "logout" });
       props.history.push("/");
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  async function handleSubmit(e) {
+    const config = {
+      headers: { Authorization: `Bearer ${appState.user.token}` }
+    };
+    try {
+      await Axios.patch("/users/me", formData, config);
     } catch (error) {
       console.log(error.message);
     }
@@ -71,13 +82,13 @@ const Profile = props => {
         <div className="container">
           <div className="row">
             <div className="col-md-3">
-              <a href="index.html" className="btn btn-light btn-block">
+              <a href="/dashboard" className="btn btn-light btn-block">
                 <i className="fas fa-arrow-left"></i> Back To Dashboard
               </a>
             </div>
             <div className="col-md-3">
-              <a href="#" className="btn btn-success btn-block">
-                <i className="fas fa-lock"></i> Change Password
+              <a href="/dashboard" onClick={handleSubmit} className="btn btn-success btn-block">
+                <i className="fas fa-lock"></i> Save Changes
               </a>
             </div>
             <div className="col-md-3">

@@ -22,29 +22,29 @@ const Dashboard = () => {
       </section>
 
       <section id="actions" className="py-4 mb-4 bg-light">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <Link to="/add-task" className="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal">
-                <i className="fas fa-plus"></i> Add Task
-              </Link>
-            </div>
-            <div className="col-md-6">
-              <Link to="/completed" className="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal">
-                <i className="fas fa-user-check"></i> Completed Tasks
-              </Link>
-            </div>
+        <div className="row">
+          <div className="col-md-6">
+            <Link to="/add-task" className="btn btn-primary btn-block" data-toggle="modal" data-target="#addPostModal">
+              <i className="fas fa-plus"></i> Add Task
+            </Link>
+          </div>
+          <div className="col-md-6">
+            <Link to="/completed" className="btn btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal">
+              <i className="fas fa-user-check"></i> Completed Tasks
+            </Link>
           </div>
         </div>
       </section>
 
-      <section id="posts">
-        <TasksModel />
-        <div className="container">
+      <section id="posts" className="py-3 mb-2 bg-light">
+        <div className="row row-unique">
+          <div className="col-md-9">
+            <TasksModel />
+          </div>
           <div className="col">
-            <div className="col-md-3">
+            <div className="col-md-13 col-unique">
               <div className="card text-center bg-primary text-white mb-3">
-                <div className="card-body">
+                <div className="col card-body">
                   <h3>Tasks</h3>
                   <h4 className="display-4">
                     <i className="fas fa-pencil-alt"></i> {appState.tasks.length}
@@ -56,10 +56,10 @@ const Dashboard = () => {
               </div>
 
               <div className="card text-center bg-success text-white mb-3">
-                <div className="card-body">
+                <div className="col card-body">
                   <h3>Categories</h3>
                   <h4 className="display-4">
-                    <i className="fas fa-folder"></i> 4
+                    <i className="fas fa-folder"></i> {appState.categories.length}
                   </h4>
                   <Link to="/categories" className="btn btn-outline-light btn-sm">
                     View

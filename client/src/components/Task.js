@@ -89,7 +89,7 @@ const Task = props => {
                     <div className="form-group">
                       <label htmlFor="category">Add Category</label>
                       <input name="category" onChange={e => onChange(e)} value={category} type="text" className="form-control" />
-                      <span>OR</span>
+                      <span>or</span>
                       <br></br>
                       <label htmlFor="category">Select Category</label>
                       <select name="category" onChange={e => onChange(e)} value={category} className="form-control">
