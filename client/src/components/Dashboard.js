@@ -1,12 +1,31 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Fragment, useContext } from "react";
-import Footer from "./Footer";
+import React, { Fragment, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Axios from "axios";
 import TasksModel from "./TasksModel";
 import StateContext from "../StateContext";
+import DispatchContext from "../DispatchContext";
 
 const Dashboard = () => {
   const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
+
+  useEffect(() => {
+    async function fetchData() {
+      const config = {
+        headers: { Authorization: `Bearer ${appState.user.token}` }
+      };
+      try {
+        const response = await Axios.get("/categories", config);
+        appDispatch({ type: "getCategories", data: response.data });
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <Fragment>
       <section id="main-header" className="py-2 bg-primary text-white">
@@ -70,8 +89,6 @@ const Dashboard = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </Fragment>
   );
 };

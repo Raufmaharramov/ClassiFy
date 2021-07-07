@@ -1,5 +1,4 @@
 import React, { Fragment, useContext } from "react";
-import Footer from "./Footer";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
@@ -44,7 +43,6 @@ const SearchResult = props => {
           </div>
         </div>
       </div>
-      <Footer />
     </Fragment>
   );
 };

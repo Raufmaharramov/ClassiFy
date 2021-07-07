@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
 import logo from "../img/pencil.jpg";
-import Footer from "./Footer";
 
 const CategoryItem = () => {
   const cat = useParams().category;
@@ -69,7 +68,6 @@ const CategoryItem = () => {
           <h4 className="design my-3 text-dark">No Tasks Found...</h4>
         )}
       </div>
-      <Footer />
     </Fragment>
   );
 };

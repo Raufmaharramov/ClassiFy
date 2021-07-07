@@ -2,7 +2,6 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-import Footer from "./Footer";
 import StateContext from "../StateContext";
 import DispatchContext from "../DispatchContext";
 
@@ -11,20 +10,18 @@ const Categories = () => {
   const appDispatch = useContext(DispatchContext);
 
   useEffect(() => {
-    const ourRequest = Axios.CancelToken.source();
     async function fetchTasks() {
       const config = {
         headers: { Authorization: `Bearer ${appState.user.token}` }
       };
       try {
-        const response = await Axios.get("/categories/count", config, { cancelToken: ourRequest.token });
+        const response = await Axios.get("/categories/count", config);
         appDispatch({ type: "showCounts", data: response.data });
       } catch (error) {
         console.log(error.message);
       }
     }
     fetchTasks();
-    return () => ourRequest.cancel();
   }, []);
 
   return (
@@ -78,7 +75,6 @@ const Categories = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </Fragment>
   );
 };

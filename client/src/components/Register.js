@@ -4,7 +4,6 @@ import DispatchContext from "../DispatchContext";
 import { Redirect } from "react-router-dom";
 import { Fragment } from "react";
 import Axios from "axios";
-import Footer from "./Footer";
 
 const Register = () => {
   const appState = useContext(StateContext);
@@ -78,7 +77,6 @@ const Register = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </Fragment>
   );
 };

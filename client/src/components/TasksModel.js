@@ -7,7 +7,6 @@ import { withRouter } from "react-router";
 import Moment from "react-moment";
 import StateContext from "../StateContext";
 import DispatchContext from "../DispatchContext";
-import Footer from "./Footer";
 
 const TasksModel = props => {
   const appState = useContext(StateContext);
@@ -44,7 +43,7 @@ const TasksModel = props => {
 
   return (
     <Fragment>
-      <section id="posts" className="py-2  bg-light text-black">
+      <section id="posts" className="py-2 bg-light text-black">
         <div className="container">
           <div className="row unique">
             <div className="col">
@@ -66,7 +65,7 @@ const TasksModel = props => {
                     </tr>
                   </thead>
                   {appState.tasks.length > 0 ? (
-                    appState.tasks.slice(0, 6).map((task, index) => {
+                    appState.tasks.slice(0, 10).map((task, index) => {
                       return (
                         <tbody key={index}>
                           <tr>
@@ -132,7 +131,6 @@ const TasksModel = props => {
           </div>
         </div>
       </section>
-      <Footer />
     </Fragment>
   );
 };

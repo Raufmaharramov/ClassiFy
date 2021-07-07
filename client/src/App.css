@@ -75,6 +75,12 @@
   color: rgb(34, 165, 247);
 }
 
+@media (max-width: 768px) {
+  .typetext {
+    display: none;
+  }
+}
+
 .checklist {
   font-size: 2rem;
 }

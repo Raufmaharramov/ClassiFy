@@ -3,7 +3,6 @@ import Axios from "axios";
 import { Redirect } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
-import Footer from "./Footer";
 
 const Login = () => {
   const appDispatch = useContext(DispatchContext);
@@ -69,7 +68,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </Fragment>
   );
 };

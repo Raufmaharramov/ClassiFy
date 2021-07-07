@@ -6,7 +6,6 @@ import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
-import Footer from "./Footer";
 
 const Profile = props => {
   const appState = useContext(StateContext);
@@ -135,7 +134,6 @@ const Profile = props => {
           </div>
         </div>
       </section>
-      <Footer />
     </Fragment>
   );
 };
