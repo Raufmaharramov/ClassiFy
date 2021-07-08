@@ -116,7 +116,7 @@ function App() {
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <PrivateRoute exact path="/add-task" component={Task} />
+                <Route exact path="/add-task" component={Task} />
                 <PrivateRoute exact path="/tasks" component={Tasks} />
                 <PrivateRoute exact path="/categories" component={Categories} />
                 <PrivateRoute exact path="/categories/:category" component={CategoryItem} />
