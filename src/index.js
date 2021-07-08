@@ -20,10 +20,10 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging")
   // Add production middleware such as redirecting to https
 
   // Express will serve up production assets i.e. main.js
-  app.use(express.static("client/build"));
+  app.use("/static", express.static(path.join(`${__dirname}/client/build`)));
   // If Express doesn't recognize route serve index.html
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(`${__dirname}/client/build/`));
   });
 }
 
