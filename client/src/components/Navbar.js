@@ -73,7 +73,7 @@ const Navbar = props => {
                     </Link>
                   </li>
                   <li className="nav-item dropdown mr-3">
-                    <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <a href="#!" className="nav-link dropdown-toggle" data-toggle="dropdown">
                       {!appState.user.avatar ? <img className="small-header-avatar" src="../img/avatar.png" /> : <img className="small-header-avatar" src={appState.user.avatar} />} {appState.user.username}
                     </a>
                     <div className="dropdown-menu">
