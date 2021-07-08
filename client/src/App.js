@@ -4,6 +4,7 @@
 import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useImmerReducer } from "use-immer";
+import "./App.css";
 // Components
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
@@ -21,7 +22,6 @@ import CompletedTasks from "./components/CompletedTasks";
 import Profile from "./components/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import BucketTask from "./components/BucketTask";
-import "./App.css";
 
 function App() {
   const initialState = {
