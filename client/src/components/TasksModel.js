@@ -13,20 +13,18 @@ const TasksModel = props => {
   const appDispatch = useContext(DispatchContext);
 
   useEffect(() => {
-    const ourRequest = Axios.CancelToken.source();
     async function fetchTasks() {
       const config = {
         headers: { Authorization: `Bearer ${appState.user.token}` }
       };
       try {
-        const response = await Axios.get("/tasks", config, { cancelToken: ourRequest.token });
+        const response = await Axios.get("/tasks", config);
         appDispatch({ type: "tasks", data: response.data });
       } catch (error) {
         console.log(error.message);
       }
     }
     fetchTasks();
-    return () => ourRequest.cancel();
   }, []);
 
   async function complete(myId) {

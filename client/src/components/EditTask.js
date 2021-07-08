@@ -19,13 +19,12 @@ const EditTask = props => {
   const { title, description, category } = formData;
 
   useEffect(() => {
-    const ourRequest = Axios.CancelToken.source();
     async function fetchTask() {
       const config = {
         headers: { Authorization: `Bearer ${appState.user.token}` }
       };
       try {
-        const response = await Axios.get(`/tasks/${id}`, config, { cancelToken: ourRequest.token });
+        const response = await Axios.get(`/tasks/${id}`, config);
         setFormData({
           title: response.data.title,
           category: response.data.category,
@@ -36,25 +35,22 @@ const EditTask = props => {
       }
     }
     fetchTask();
-    return () => ourRequest.cancel();
   }, []);
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const ourRequest = Axios.CancelToken.source();
     const config = {
       headers: { Authorization: `Bearer ${appState.user.token}` }
     };
     try {
-      const response = await Axios.patch(`/tasks/${id}`, formData, config, { cancelToken: ourRequest.token });
+      const response = await Axios.patch(`/tasks/${id}`, formData, config);
       appDispatch({ type: "task", data: response.data });
       props.history.push("/dashboard");
     } catch (error) {
       console.log(error.message);
     }
-    return () => ourRequest.cancel();
   }
 
   return (
